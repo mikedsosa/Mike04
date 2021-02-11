@@ -23,6 +23,35 @@ namespace Mike04.Controllers
             return View();
         }
 
+        [HttpGet("List")]
+        public IActionResult RestList()
+        {
+            List<string> restList = new List<string>();
+            foreach (Restaurant r in Restaurant.GetRestaurants()) {
+                restList.Add($"#{r.RestRanking}: {r.RestName}  -  Best Dish: {r.RestDish}  -  Address: {r.RestAddress}  -  Phone: {r.RestPhone}  -  Link: {r.RestLink}");
+            }
+            return View(restList);
+        }
+
+        [HttpGet]
+        public IActionResult AddRestaurant()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddRestaurant(RestResponse resResponse)
+        {
+            TempStorageClass.AddRestaurant(resResponse);
+            return View();
+
+        }
+
+        public IActionResult UserList()
+        {
+            return View(TempStorageClass.Restaurants);
+        }
+
         public IActionResult Privacy()
         {
             return View();
